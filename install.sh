@@ -57,8 +57,9 @@ systemctl restart nginx
 # Projenin başlatılması
 echo "OpenVPN web arayüzü başlatılıyor..."
 cd /var/www/openvpn-web
-source openvpn-web-env/bin/activate
-nohup python3 app.py &
+source ../openvpn-web-env/bin/activate  # Virtual environment'ı doğru yoldan aktive et
+nohup python3 app.py &  # Uygulamayı arka planda çalıştır
+
 
 echo "Kurulum tamamlandı! Web arayüzüne erişmek için tarayıcınızı açın ve sunucu IP'nizi girin."
 echo "http://<server_ip> adresine gidin ve OpenVPN kurulumunu tamamlayın."
