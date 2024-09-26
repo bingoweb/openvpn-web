@@ -11,7 +11,7 @@ echo "== OpenVPN ve Web Arayüzü Kurulumuna Hoş Geldiniz =="
 # Gerekli bağımlılıkların güncellenmesi ve yüklenmesi
 echo "Gerekli bağımlılıklar güncelleniyor ve yükleniyor..."
 apt-get update
-apt-get install -y python3-pip python3-venv python3-dev build-essential libssl-dev libffi-dev python3-setuptools openvpn nginx
+apt-get install -y python3-pip python3-venv python3-dev build-essential libssl-dev libffi-dev python3-setuptools nginx
 
 # Python virtualenv oluşturma ve aktif etme
 echo "Python virtual environment oluşturuluyor..."
@@ -23,11 +23,8 @@ echo "Flask ve SocketIO kuruluyor..."
 pip install wheel
 pip install flask flask-socketio eventlet
 
-# OpenVPN kurulumu
-echo "OpenVPN kuruluyor..."
-wget https://git.io/vpn -O openvpn-install.sh
-chmod +x openvpn-install.sh
-./openvpn-install.sh
+# OpenVPN kurulumu web arayüzü üzerinden yapılacağı için buradan kaldırıldı
+# wget ve ./openvpn-install.sh satırları çıkarıldı.
 
 # Web arayüzü kurulumunu ayarlama
 echo "Web arayüzü için ayarlar yapılıyor..."
@@ -38,7 +35,7 @@ echo "Nginx yapılandırılıyor..."
 cat > /etc/nginx/sites-available/openvpn-web <<EOL
 server {
     listen 80;
-    server_name your_domain_or_ip;
+    server_name _;
 
     location / {
         proxy_pass http://127.0.0.1:5000;
@@ -57,7 +54,8 @@ systemctl restart nginx
 echo "OpenVPN web arayüzü başlatılıyor..."
 cd /var/www/openvpn-web
 source openvpn-web-env/bin/activate
-python3 app.py &
+nohup python3 app.py &
 
 echo "Kurulum tamamlandı! Web arayüzüne erişmek için tarayıcınızı açın ve sunucu IP'nizi girin."
+echo "http://<server_ip> adresine gidin ve OpenVPN kurulumunu tamamlayın."
 
