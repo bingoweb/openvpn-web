@@ -13,10 +13,14 @@ echo "Gerekli bağımlılıklar güncelleniyor ve yükleniyor..."
 apt-get update
 apt-get install -y python3-pip python3-venv python3-dev build-essential libssl-dev libffi-dev python3-setuptools nginx
 
-# Python virtualenv oluşturma ve aktif etme
-echo "Python virtual environment oluşturuluyor..."
-python3 -m venv openvpn-web-env
-source openvpn-web-env/bin/activate
+# Web arayüzü dizinini oluşturma
+echo "Web arayüzü dizini oluşturuluyor..."
+mkdir -p /var/www/openvpn-web
+
+# Web arayüzü dosyalarını kopyalama
+echo "Web arayüzü için ayarlar yapılıyor..."
+cp -r /path/to/your/project/* /var/www/openvpn-web  # Projeyi uygun dizine taşıyoruz
+
 
 # Flask ve SocketIO modüllerinin kurulması
 echo "Flask ve SocketIO kuruluyor..."
